@@ -6,6 +6,9 @@ import 'package:lg_task_two/core/config/app_config.dart';
 import 'package:lg_task_two/core/config/app_locale.dart';
 import 'package:lg_task_two/core/theme/bloc/theme_bloc.dart';
 import 'package:lg_task_two/core/theme/bloc/theme_state.dart';
+import 'package:lg_task_two/features/home/presentation/blocs/clean_lg_logo/clean_lg_logo_bloc.dart';
+import 'package:lg_task_two/features/home/presentation/blocs/refresh_lg/refresh_lg_bloc.dart';
+import 'package:lg_task_two/features/home/presentation/blocs/send_lg_logo/send_lg_logo_bloc.dart';
 import 'package:lg_task_two/init_dependencies.dart';
 
 void main() async {
@@ -18,7 +21,17 @@ void main() async {
           create: (_) => ThemeBloc(),
         ),
         BlocProvider(
-            create: (_) => SSHClientCubit()..getCachedConnectionData()),
+          create: (_) => SSHClientCubit()..getCachedConnectionData(),
+        ),
+        BlocProvider(
+          create: (_) => serviceLocator<RefreshLgBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => serviceLocator<SendLgLogoBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => serviceLocator<CleanLgLogoBloc>(),
+        ),
       ],
       child: const MyApp(),
     ),

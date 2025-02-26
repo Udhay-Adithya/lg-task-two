@@ -1,8 +1,14 @@
-import 'dart:developer';
-
-import 'package:dartssh2/dartssh2.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:lg_task_two/core/common/ssh_connection/domain/entity/connection_data.dart';
+import 'package:lg_task_two/features/home/data/datasources/home_remote_datasource.dart';
+import 'package:lg_task_two/features/home/data/repository/home_repository_impl.dart';
+import 'package:lg_task_two/features/home/domain/repository/home_repository.dart';
+import 'package:lg_task_two/features/home/domain/usecases/clean_lg_logo.dart';
+import 'package:lg_task_two/features/home/domain/usecases/refresh_lg.dart';
+import 'package:lg_task_two/features/home/domain/usecases/send_lg_logo.dart';
+import 'package:lg_task_two/features/home/presentation/blocs/clean_lg_logo/clean_lg_logo_bloc.dart';
+import 'package:lg_task_two/features/home/presentation/blocs/refresh_lg/refresh_lg_bloc.dart';
+import 'package:lg_task_two/features/home/presentation/blocs/send_lg_logo/send_lg_logo_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 part 'init_dependencies.main.dart';

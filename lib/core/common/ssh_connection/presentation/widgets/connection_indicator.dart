@@ -18,8 +18,6 @@ class SSHConnectionIndicator extends StatelessWidget {
               color: Colors.green,
             ),
           );
-        } else if (state is SSHClientLoading) {
-          return const Text('Connecting...');
         } else {
           return Container(
             height: 15,

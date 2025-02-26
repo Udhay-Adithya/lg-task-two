@@ -3,41 +3,57 @@ part of 'init_dependencies.dart';
 final GetIt serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
-  await _initSSHClient();
-  _initConnection();
+  _initHome();
 
   final appDir = await getApplicationDocumentsDirectory();
   Hive.init(appDir.path);
   Hive.registerAdapter(ConnectionDataAdapter());
 
-  final connectionDataBox = await Hive.openBox<ConnectionData>('userBox');
+  final connectionDataBox =
+      await Hive.openBox<ConnectionData>('connectionData');
 
   serviceLocator
       .registerLazySingleton<Box<ConnectionData>>(() => connectionDataBox);
 }
 
-Future<void> _initSSHClient({
-  String host = "192.168.56.103",
-  String username = "lg",
-  int port = 22,
-  String password = "lqgalaxy",
-}) async {
-  try {
-    final socket = await SSHSocket.connect(host, port).timeout(
-      const Duration(milliseconds: 2000),
+void _initHome() {
+  serviceLocator
+    ..registerFactory<HomeRemoteDatasource>(
+      () => HomeRemoteDatasourceImpl(),
+    )
+    ..registerFactory<HomeRepository>(
+      () => HomeRepositoryImpl(
+        remoteDatasource: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => RefreshLgUseCase(
+        repository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => SendLgLogoUseCase(
+        repository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => CleanLgLogoUseCase(
+        repository: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => RefreshLgBloc(
+        refreshLgUseCase: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => SendLgLogoBloc(
+        sendLgLogoUseCase: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => CleanLgLogoBloc(
+        cleanLgLogoUseCase: serviceLocator(),
+      ),
     );
-    final client = SSHClient(
-      socket,
-      username: username,
-      onPasswordRequest: () => password,
-      printDebug: (p0) => log(p0.toString()),
-    );
-    serviceLocator.registerLazySingleton(
-      () => client,
-    );
-  } catch (e) {
-    log('Failed to initialize SSH client: $e');
-  }
 }
-
-void _initConnection() {}
