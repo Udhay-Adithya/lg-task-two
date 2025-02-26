@@ -40,9 +40,9 @@ class ConnectButton extends StatelessWidget {
             ),
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(9),
+                borderRadius: BorderRadius.circular(12),
               ),
-              fixedSize: const Size(200, 55),
+              fixedSize: const Size(180, 50),
               backgroundColor: Colors.greenAccent.shade400,
             ),
           );
