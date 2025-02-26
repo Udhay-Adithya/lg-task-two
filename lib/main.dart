@@ -9,7 +9,7 @@ import 'package:lg_task_two/init_dependencies.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initDependencies();
+  // await initDependencies();
   runApp(
     MultiBlocProvider(
       providers: [

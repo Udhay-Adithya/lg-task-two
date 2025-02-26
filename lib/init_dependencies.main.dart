@@ -31,14 +31,18 @@ Future<void> _initSSHClient({
   int port = 22,
   String password = "lqgalaxy",
 }) async {
-  final client = SSHClient(
-    await SSHSocket.connect(localhost, port),
-    username: username,
-    onPasswordRequest: () => password,
-  );
-  serviceLocator.registerLazySingleton(
-    () => client,
-  );
+  if (false) {
+    try {
+      final client = SSHClient(
+        await SSHSocket.connect(localhost, port),
+        username: username,
+        onPasswordRequest: () => password,
+      );
+      serviceLocator.registerLazySingleton(
+        () => client,
+      );
+    } on Exception catch (e) {}
+  }
 }
 
 void _initConnection() {}
