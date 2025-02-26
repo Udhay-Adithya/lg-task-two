@@ -14,34 +14,29 @@ Future<void> initDependencies() async {
   // final userBox = await Hive.openBox<Connection>('userBox');
 
   // serviceLocator.registerLazySingleton<Box<Connection>>(() => userBox);
-
-  final client = SSHClient(
-    await SSHSocket.connect('localhost', 22),
-    username: '<username>',
-    onPasswordRequest: () => '<password>',
-  );
-  serviceLocator.registerLazySingleton(
-    () => client,
-  );
 }
 
 Future<void> _initSSHClient({
-  String localhost = "192.168.56.103",
+  String host = "192.168.56.103",
   String username = "lg",
   int port = 22,
   String password = "lqgalaxy",
 }) async {
-  if (false) {
-    try {
-      final client = SSHClient(
-        await SSHSocket.connect(localhost, port),
-        username: username,
-        onPasswordRequest: () => password,
-      );
-      serviceLocator.registerLazySingleton(
-        () => client,
-      );
-    } on Exception catch (e) {}
+  try {
+    final socket = await SSHSocket.connect(host, port).timeout(
+      const Duration(milliseconds: 2000),
+    );
+    final client = SSHClient(
+      socket,
+      username: username,
+      onPasswordRequest: () => password,
+      printDebug: (p0) => log(p0.toString()),
+    );
+    serviceLocator.registerLazySingleton(
+      () => client,
+    );
+  } catch (e) {
+    log('Failed to initialize SSH client: $e');
   }
 }
 

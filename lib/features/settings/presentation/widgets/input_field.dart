@@ -5,11 +5,13 @@ class InputField extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
   final bool isObscureText;
+  final Icon prefixIcon;
 
   const InputField({
     super.key,
     required this.hintText,
     required this.controller,
+    required this.prefixIcon,
     this.isObscureText = false,
   });
 
@@ -39,7 +41,7 @@ class _AuthFieldState extends State<InputField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.isObscureText ? "Password" : "Username",
+            widget.hintText,
             style: Theme.of(context).textTheme.labelMedium,
           ),
           const SizedBox(height: 6),
@@ -54,9 +56,7 @@ class _AuthFieldState extends State<InputField> {
                   .copyWith(color: Colors.red),
               hintText: widget.hintText,
               hintStyle: Theme.of(context).textTheme.bodySmall,
-              prefixIcon: widget.isObscureText
-                  ? const Icon(Iconsax.lock_1)
-                  : const Icon(Iconsax.user),
+              prefixIcon: widget.prefixIcon,
               suffixIcon: widget.isObscureText
                   ? IconButton(
                       icon: Icon(
@@ -69,16 +69,12 @@ class _AuthFieldState extends State<InputField> {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            autofillHints: widget.isObscureText
-                ? const [AutofillHints.password]
-                : const [AutofillHints.username],
+            autofillHints:
+                widget.isObscureText ? const [AutofillHints.password] : null,
             validator: (value) {
               if (widget.isObscureText) {
                 if (value!.isEmpty) {
                   return "${widget.hintText} is missing!";
-                }
-                if (value.length < 8) {
-                  return "${widget.hintText} must be at least 8 characters!";
                 }
                 return null;
               }
