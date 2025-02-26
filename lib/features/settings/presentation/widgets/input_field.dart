@@ -16,10 +16,10 @@ class InputField extends StatefulWidget {
   });
 
   @override
-  State<InputField> createState() => _AuthFieldState();
+  State<InputField> createState() => _InputFieldState();
 }
 
-class _AuthFieldState extends State<InputField> {
+class _InputFieldState extends State<InputField> {
   late bool _obscureText;
 
   @override
@@ -27,7 +27,7 @@ class _AuthFieldState extends State<InputField> {
     super.initState();
     _obscureText = widget.isObscureText;
   }
-
+  
   void _toggleVisibility() {
     setState(() {
       _obscureText = !_obscureText;

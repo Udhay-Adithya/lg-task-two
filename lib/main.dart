@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lg_task_two/core/common/ssh_connection/presentation/ssh_client_cubit/ssh_clent_cubit.dart';
 import 'package:lg_task_two/core/common/widgets/bottom_nav_bar.dart';
 import 'package:lg_task_two/core/config/app_config.dart';
 import 'package:lg_task_two/core/config/app_locale.dart';
@@ -16,6 +17,8 @@ void main() async {
         BlocProvider<ThemeBloc>(
           create: (_) => ThemeBloc(),
         ),
+        BlocProvider(
+            create: (_) => SSHClientCubit()..getCachedConnectionData()),
       ],
       child: const MyApp(),
     ),

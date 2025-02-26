@@ -20,7 +20,7 @@ class BottomNavBarState extends State<BottomNavBar> {
   List<Widget> _buildPages() {
     return [
       const HomePage(),
-      const SettingsPage(),
+      SettingsPage(),
     ];
   }
 

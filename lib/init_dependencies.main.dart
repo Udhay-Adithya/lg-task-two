@@ -8,12 +8,12 @@ Future<void> initDependencies() async {
 
   final appDir = await getApplicationDocumentsDirectory();
   Hive.init(appDir.path);
-  // Hive.registerAdapter(ConnectionAdapter());
-  // Hive.registerAdapter(ConnectionDataAdapter());
+  Hive.registerAdapter(ConnectionDataAdapter());
 
-  // final userBox = await Hive.openBox<Connection>('userBox');
+  final connectionDataBox = await Hive.openBox<ConnectionData>('userBox');
 
-  // serviceLocator.registerLazySingleton<Box<Connection>>(() => userBox);
+  serviceLocator
+      .registerLazySingleton<Box<ConnectionData>>(() => connectionDataBox);
 }
 
 Future<void> _initSSHClient({
