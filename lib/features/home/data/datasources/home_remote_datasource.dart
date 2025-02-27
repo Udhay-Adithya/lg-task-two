@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dartssh2/dartssh2.dart';
+import 'package:lg_task_two/features/home/data/model/kml_model.dart';
+import 'package:lg_task_two/features/home/data/model/screen_overlay_model.dart';
 
 abstract interface class HomeRemoteDatasource {
   Future<void> refreshLg(
@@ -18,16 +20,21 @@ abstract interface class HomeRemoteDatasource {
 
 class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   @override
-  Future<void> cleanKml(SSHClient client) async {}
+  Future<void> cleanKml(SSHClient client) async {
+    try {
+      await client.run('echo "" > /tmp/query.txt');
+      await client.run("echo '' > /var/www/html/kmls.txt");
+    } catch (e) {
+      log('Failed to clean KML: $e');
+    }
+  }
 
   @override
-  Future<void> cleanLgLogo(
-    SSHClient client,
-    int numberOfRigs,
-  ) async {
+  Future<void> cleanLgLogo(SSHClient client, int numberOfRigs) async {
     try {
       for (var i = 2; i <= numberOfRigs; i++) {
-        await client.run("echo '' > /var/www/html/kml/slave_$i.kml");
+        final blankKml = KMLModel.generateBlank('slave_$i');
+        await client.run("echo '$blankKml' > /var/www/html/kml/slave_$i.kml");
       }
     } catch (e) {
       log('Failed to clean logo: $e');
@@ -91,26 +98,15 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   @override
   Future<void> sendLgLogo(SSHClient client) async {
     try {
-      const String logoContent = '''<?xml version="1.0" encoding="UTF-8"?>
-        <kml xmlns="http://www.opengis.net/kml/2.2">
-         <ScreenOverlay>
-           <name>Logo</name>
-           <Icon>
-             <href>https://1.bp.blogspot.com/-POkV83Ut-7k/XdjpKI4M8AI/AAAAAAAHdXA/VSFXPJQsIOkdqtkJrGnh59WxaRqaQEtmQCLcBGAsYHQ/s1600/LOGO%2BLIQUID%2BGALAXY-sq1000-%2BOKnoline.png</href>
-            </Icon>
-            <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
-            <screenXY x="0.05" y="0.95" xunits="fraction" yunits="fraction"/>
-            <size x="0.2" y="0.2" xunits="fraction" yunits="fraction"/>
-          </ScreenOverlay>
-        </kml>''';
+      final screenOverlay = ScreenOverlayModel.logo();
+      final kml = KMLModel(
+        name: 'LG-Logo',
+        content: '<name>Liquid Galaxy Logo</name>',
+        screenOverlay: screenOverlay.tag,
+      );
 
-      final res = await client
-          .run("echo '$logoContent' > /var/www/html/kml/slave_1.kml");
-      log('Logo sent: ${utf8.decode(res)}');
-
-      // Verify the file was created
-      var verifyFile = await client.run('cat /var/www/html/kml/slave_1.kml');
-      log('KML File Content: ${utf8.decode(verifyFile)}');
+      await client.run("echo '${kml.body}' > /var/www/html/kml/slave_3.kml");
+      log('Logo KML file updated successfully.');
     } catch (e) {
       log('Failed to set logo: $e');
     }

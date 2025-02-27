@@ -6,7 +6,6 @@ import 'package:lg_task_two/core/common/ssh_connection/presentation/widgets/conn
 import 'package:lg_task_two/core/common/widgets/bottom_nav_bar.dart';
 import 'package:lg_task_two/core/common/widgets/loader.dart';
 import 'package:lg_task_two/features/home/presentation/blocs/clean_lg_logo/clean_lg_logo_bloc.dart';
-import 'package:lg_task_two/features/home/presentation/blocs/refresh_lg/refresh_lg_bloc.dart';
 import 'package:lg_task_two/features/home/presentation/blocs/send_lg_logo/send_lg_logo_bloc.dart';
 import 'package:lg_task_two/features/home/presentation/widgets/command_buttons.dart';
 
@@ -51,13 +50,13 @@ class HomePage extends StatelessWidget {
                                 context.read<SendLgLogoBloc>().add(
                                       SendLgLogo(client: client),
                                     );
-                                context.read<RefreshLgBloc>().add(
-                                      RefreshLg(
-                                        client: client,
-                                        numberOfRigs: 3,
-                                        password: "lqgalaxy",
-                                      ),
-                                    );
+                                // context.read<RefreshLgBloc>().add(
+                                //       RefreshLg(
+                                //         client: client,
+                                //         numberOfRigs: 3,
+                                //         password: "lqgalaxy",
+                                //       ),
+                                //     );
                               },
                             );
                           },
@@ -74,13 +73,13 @@ class HomePage extends StatelessWidget {
                                     numberOfRigs: 3,
                                   ),
                                 );
-                            context.read<RefreshLgBloc>().add(
-                                  RefreshLg(
-                                    client: client,
-                                    numberOfRigs: 3,
-                                    password: "lqgalaxy",
-                                  ),
-                                );
+                            // context.read<RefreshLgBloc>().add(
+                            //       RefreshLg(
+                            //         client: client,
+                            //         numberOfRigs: 3,
+                            //         password: "lqgalaxy",
+                            //       ),
+                            //     );
                           },
                         ),
                       ),
