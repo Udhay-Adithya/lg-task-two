@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="VolTrac" src="assets/images/lg_logo.png" height="250px">
+  <img alt="T2" src="assets/images/lg_logo.png" height="250px">
 </p>  
 
 # 🌍 Liquid Galaxy Remote Control App 🚀
