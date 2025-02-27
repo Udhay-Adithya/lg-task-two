@@ -42,6 +42,11 @@ void _initHome() {
       ),
     )
     ..registerFactory(
+      () => SendKmlUseCase(
+        repository: serviceLocator(),
+      ),
+    )
+    ..registerFactory(
       () => CleanKmlUseCase(
         repository: serviceLocator(),
       ),
@@ -60,7 +65,13 @@ void _initHome() {
       () => CleanLgLogoBloc(
         cleanLgLogoUseCase: serviceLocator(),
       ),
-    )..registerLazySingleton(
+    )
+    ..registerLazySingleton(
+      () => SendKmlBloc(
+        sendKmlUseCase: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
       () => CleanKmlBloc(
         cleanLgLogoUseCase: serviceLocator(),
       ),

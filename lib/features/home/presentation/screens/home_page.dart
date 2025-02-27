@@ -5,8 +5,10 @@ import 'package:lg_task_two/core/common/ssh_connection/presentation/ssh_client_c
 import 'package:lg_task_two/core/common/ssh_connection/presentation/widgets/connection_indicator.dart';
 import 'package:lg_task_two/core/common/widgets/bottom_nav_bar.dart';
 import 'package:lg_task_two/core/common/widgets/loader.dart';
+import 'package:lg_task_two/core/constants/kml_constants.dart';
 import 'package:lg_task_two/features/home/presentation/blocs/clean_kml/clean_kml_bloc.dart';
 import 'package:lg_task_two/features/home/presentation/blocs/clean_lg_logo/clean_lg_logo_bloc.dart';
+import 'package:lg_task_two/features/home/presentation/blocs/send_kml_bloc/send_kml_bloc.dart';
 import 'package:lg_task_two/features/home/presentation/blocs/send_lg_logo/send_lg_logo_bloc.dart';
 import 'package:lg_task_two/features/home/presentation/widgets/command_buttons.dart';
 
@@ -74,13 +76,6 @@ class HomePage extends StatelessWidget {
                                     numberOfRigs: 3,
                                   ),
                                 );
-                            // context.read<RefreshLgBloc>().add(
-                            //       RefreshLg(
-                            //         client: client,
-                            //         numberOfRigs: 3,
-                            //         password: "lqgalaxy",
-                            //       ),
-                            //     );
                           },
                         ),
                       ),
@@ -93,8 +88,22 @@ class HomePage extends StatelessWidget {
                     children: [
                       Flexible(
                         child: CommandButton(
-                          buttonText: "Send\nKML",
-                          onPressed: () {},
+                          buttonText: "San\nFrancisco",
+                          onPressed: () async {
+                            String latitude = "37.7577000";
+                            String longitude = "-122.4376000";
+
+                            final command =
+                                "echo 'search=$latitude,$longitude' > /tmp/query.txt";
+                            await client.run(command);
+                            final kmlContent = KmlConstants().sanFrancisco;
+                            context.read<SendKmlBloc>().add(
+                                  SendKml(
+                                      client: client,
+                                      kmlContent: kmlContent,
+                                      kmlName: "ground_overlay"),
+                                );
+                          },
                         ),
                       ),
                       const SizedBox(width: 20),
@@ -104,6 +113,35 @@ class HomePage extends StatelessWidget {
                           onPressed: () {
                             context.read<CleanKmlBloc>().add(
                                   CleanKml(client: client),
+                                );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: CommandButton(
+                          buttonText: "Eiffel\nTower",
+                          onPressed: () async {
+                            String latitude = "48.85840000000001";
+                            String longitude = "2.2945";
+
+                            final command =
+                                "echo 'search=$latitude,$longitude' > /tmp/query.txt";
+                            await client.run(command);
+                            final kmlContent = KmlConstants().eiffelTower;
+                            context.read<SendKmlBloc>().add(
+                                  SendKml(
+                                    client: client,
+                                    kmlContent: kmlContent,
+                                    kmlName: 'eiffel_tower',
+                                  ),
                                 );
                           },
                         ),

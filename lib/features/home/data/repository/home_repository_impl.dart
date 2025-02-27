@@ -75,9 +75,12 @@ class HomeRepositoryImpl implements HomeRepository {
 
   @override
   Future<Either<Failure, void>> sendKml(
-      SSHClient client, String kmlContent) async {
+    SSHClient client,
+    String kmlContent,
+    String kmlName,
+  ) async {
     try {
-      final resp = await remoteDatasource.sendKml(client, kmlContent);
+      final resp = await remoteDatasource.sendKml(client, kmlContent, kmlName);
 
       return right(resp);
     } on ServerException catch (e) {

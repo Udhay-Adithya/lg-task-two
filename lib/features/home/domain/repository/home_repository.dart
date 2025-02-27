@@ -9,7 +9,7 @@ abstract interface class HomeRepository {
     String password, {
     int refreshInterval = 2,
   });
-  Future<Either<Failure, void>> sendKml(SSHClient client, String kmlContent);
+  Future<Either<Failure, void>> sendKml(SSHClient client, String kmlContent, String kmlName);
   Future<Either<Failure, void>> sendLgLogo(SSHClient client);
   Future<Either<Failure, void>> cleanLgLogo(SSHClient client, int numberOfRigs);
   Future<Either<Failure, void>> cleanKml(SSHClient client);

@@ -36,6 +36,9 @@ flutter:
 
   assets:
     - assets/images/undraw_dreamer_gb41.png
+    - assets/images/lg_logo.png
+    - assets/kml/1.kml
+    - assets/kml/2.kml
 
   fonts:
     - family: Poppins

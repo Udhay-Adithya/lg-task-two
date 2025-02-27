@@ -12,7 +12,7 @@ abstract interface class HomeRemoteDatasource {
     String password, {
     int refreshInterval = 2,
   });
-  Future<void> sendKml(SSHClient client, String kmlContent);
+  Future<void> sendKml(SSHClient client, String kmlContent, String kmlName);
   Future<void> sendLgLogo(SSHClient client);
   Future<void> cleanLgLogo(SSHClient client, int numberOfRigs);
   Future<void> cleanKml(SSHClient client);
@@ -93,7 +93,45 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   }
 
   @override
-  Future<void> sendKml(SSHClient client, String kmlContent) async {}
+  Future<void> sendKml(
+    SSHClient client,
+    String kmlContent,
+    String kmlName,
+  ) async {
+    try {
+      // // Fly to the kml location
+      // final flyRes = await client.run(
+      //     "echo 'search = \"2.2945\",\"48.85840000000001\"' > /tmp/query.txt");
+      // Step 1: Create the kmls directory if it doesn't exist
+      await client.run('mkdir -p /var/www/html/kmls');
+
+      // Step 2: Upload the KML file using SFTP
+      final sftp = await client.sftp();
+      final sftpFile = await sftp.open(
+        '/var/www/html/kmls/$kmlName.kml',
+        mode: SftpFileOpenMode.create |
+            SftpFileOpenMode.truncate |
+            SftpFileOpenMode.write,
+      );
+
+      // Convert the KML content to a byte stream and upload it
+      final kmlStream = Stream.value(utf8.encode(kmlContent.trim()));
+      await sftpFile.write(kmlStream);
+      await sftpFile.close();
+
+      // Step 3: Link the KML file in kmls.txt
+      final result = await client.run(
+          "echo 'http://lg1:81/kmls/$kmlName.kml' > /var/www/html/kmls.txt");
+
+      var resultString = utf8.decode(result);
+      log("Res: $resultString");
+
+      log('KML file "$kmlName.kml" uploaded, linked, and reloaded successfully.');
+    } catch (e, stackTrace) {
+      log('Failed to send KML: $e');
+      log(stackTrace.toString());
+    }
+  }
 
   @override
   Future<void> sendLgLogo(SSHClient client) async {

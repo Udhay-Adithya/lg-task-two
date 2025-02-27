@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2"
+    xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+    <Document>
+        <name>Eiffel Tower</name>
+        <Placemark id="0709CC4829367DA7C09B">
+            <name>Eiffel Tower</name>
+            <Point>
+                <coordinates>2.2945,48.85840000000001,100</coordinates>
+            </Point>
+        </Placemark>
+    </Document>
+</kml>
