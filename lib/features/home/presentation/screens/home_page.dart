@@ -5,6 +5,7 @@ import 'package:lg_task_two/core/common/ssh_connection/presentation/ssh_client_c
 import 'package:lg_task_two/core/common/ssh_connection/presentation/widgets/connection_indicator.dart';
 import 'package:lg_task_two/core/common/widgets/bottom_nav_bar.dart';
 import 'package:lg_task_two/core/common/widgets/loader.dart';
+import 'package:lg_task_two/features/home/presentation/blocs/clean_kml/clean_kml_bloc.dart';
 import 'package:lg_task_two/features/home/presentation/blocs/clean_lg_logo/clean_lg_logo_bloc.dart';
 import 'package:lg_task_two/features/home/presentation/blocs/send_lg_logo/send_lg_logo_bloc.dart';
 import 'package:lg_task_two/features/home/presentation/widgets/command_buttons.dart';
@@ -100,7 +101,11 @@ class HomePage extends StatelessWidget {
                       Flexible(
                         child: CommandButton(
                           buttonText: "Clean\nKML",
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<CleanKmlBloc>().add(
+                                  CleanKml(client: client),
+                                );
+                          },
                         ),
                       ),
                     ],
