@@ -36,6 +36,11 @@ class HomePage extends StatelessWidget {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Image.asset(
+                  "assets/images/lg_logo.png",
+                  width: MediaQuery.of(context).size.width * 0.5,
+                ),
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -53,13 +58,6 @@ class HomePage extends StatelessWidget {
                                 context.read<SendLgLogoBloc>().add(
                                       SendLgLogo(client: client),
                                     );
-                                // context.read<RefreshLgBloc>().add(
-                                //       RefreshLg(
-                                //         client: client,
-                                //         numberOfRigs: 3,
-                                //         password: "lqgalaxy",
-                                //       ),
-                                //     );
                               },
                             );
                           },
