@@ -5,9 +5,10 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: CircularProgressIndicator.adaptive(
         strokeWidth: 2,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
     );
   }

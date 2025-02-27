@@ -99,9 +99,6 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
     String kmlName,
   ) async {
     try {
-      // // Fly to the kml location
-      // final flyRes = await client.run(
-      //     "echo 'search = \"2.2945\",\"48.85840000000001\"' > /tmp/query.txt");
       // Step 1: Create the kmls directory if it doesn't exist
       await client.run('mkdir -p /var/www/html/kmls');
 
