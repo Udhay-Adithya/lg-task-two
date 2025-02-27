@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:lg_task_two/core/common/ssh_connection/presentation/ssh_client_cubit/ssh_clent_cubit.dart';
-import 'package:lg_task_two/core/common/ssh_connection/presentation/widgets/connection_indicator.dart';
 import 'package:lg_task_two/core/utils/theme_switch_button.dart';
 import 'package:lg_task_two/features/settings/presentation/widgets/connect_button.dart';
 import 'package:lg_task_two/features/settings/presentation/widgets/input_field.dart';
@@ -46,7 +45,6 @@ class _SettingsPageState extends State<SettingsPage> {
         centerTitle: true,
         automaticallyImplyLeading: true,
         actions: const [
-          SSHConnectionIndicator(),
           ThemeSwitchButton(),
         ],
         title: Text(
