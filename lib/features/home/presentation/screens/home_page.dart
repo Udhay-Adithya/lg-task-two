@@ -97,9 +97,10 @@ class HomePage extends StatelessWidget {
                             final kmlContent = KmlConstants().sanFrancisco;
                             context.read<SendKmlBloc>().add(
                                   SendKml(
-                                      client: client,
-                                      kmlContent: kmlContent,
-                                      kmlName: "ground_overlay"),
+                                    client: client,
+                                    kmlContent: kmlContent,
+                                    kmlName: "master_1",
+                                  ),
                                 );
                           },
                         ),
@@ -138,7 +139,7 @@ class HomePage extends StatelessWidget {
                                   SendKml(
                                     client: client,
                                     kmlContent: kmlContent,
-                                    kmlName: 'eiffel_tower',
+                                    kmlName: 'master_1',
                                   ),
                                 );
                           },
