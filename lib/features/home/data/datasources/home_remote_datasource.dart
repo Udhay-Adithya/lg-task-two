@@ -22,8 +22,9 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   @override
   Future<void> cleanKml(SSHClient client) async {
     try {
+      final blankKml = KMLModel.generateBlank('master_1');
       await client.run('echo "" > /tmp/query.txt');
-      await client.run("echo '' > /var/www/html/kml/kml.txt");
+      await client.run("echo '$blankKml' > /var/www/html/kml/master_1.kml");
     } catch (e) {
       log('Failed to clean KML: $e');
     }
@@ -117,8 +118,8 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
       await sftpFile.close();
 
       // Step 3: Link the KML file in kmls.txt
-      final result = await client
-          .run("echo 'http://lg1:81/kml/$kmlName.kml' > /var/www/html/kml.txt");
+      final result = await client.run(
+          "echo 'http://lg1:81/kml/$kmlName.kml' > /var/www/html/kml/kml.txt");
 
       var resultString = utf8.decode(result);
       log("Res: $resultString");
