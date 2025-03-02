@@ -23,7 +23,7 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   Future<void> cleanKml(SSHClient client) async {
     try {
       await client.run('echo "" > /tmp/query.txt');
-      await client.run("echo '' > /var/www/html/kmls.txt");
+      await client.run("echo '' > /var/www/html/kml/kml.txt");
     } catch (e) {
       log('Failed to clean KML: $e');
     }
@@ -100,12 +100,12 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   ) async {
     try {
       // Step 1: Create the kmls directory if it doesn't exist
-      await client.run('mkdir -p /var/www/html/kmls');
+      await client.run('mkdir -p /var/www/html/kml');
 
       // Step 2: Upload the KML file using SFTP
       final sftp = await client.sftp();
       final sftpFile = await sftp.open(
-        '/var/www/html/kmls/$kmlName.kml',
+        '/var/www/html/kml/$kmlName.kml',
         mode: SftpFileOpenMode.create |
             SftpFileOpenMode.truncate |
             SftpFileOpenMode.write,
@@ -117,8 +117,8 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
       await sftpFile.close();
 
       // Step 3: Link the KML file in kmls.txt
-      final result = await client.run(
-          "echo 'http://lg1:81/kmls/$kmlName.kml' > /var/www/html/kmls.txt");
+      final result = await client
+          .run("echo 'http://lg1:81/kml/$kmlName.kml' > /var/www/html/kml.txt");
 
       var resultString = utf8.decode(result);
       log("Res: $resultString");
